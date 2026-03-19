@@ -1491,40 +1491,29 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
-# Persistence14 stuff
-- type: construction
-  id: Morgue
-  graph: MorgueGraph
-  startNode: start
-  targetNode: morgue
-  category: construction-category-furniture
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canBuildInImpassable: false
-  conditions:
-    - !type:TileNotBlocked
 
 - type: construction
-  id: Crematorium
-  graph: CrematoriumGraph
+  id: Bonfire
+  graph: Bonfire
   startNode: start
-  targetNode: crematorium
-  category: construction-category-furniture
+  targetNode: bonfire
+  category: construction-category-structures
   objectType: Structure
   placementMode: SnapgridCenter
+  canRotate: false
   canBuildInImpassable: false
   conditions:
-    - !type:TileNotBlocked
+  - !type:TileNotBlocked
 
 - type: construction
-  id: BarSignDefault
-  graph: BarSignGraph
+  id: BonfireStake
+  graph: Bonfire
   startNode: start
-  targetNode: bar_sign
-  category: construction-category-furniture
-  description: recipes-bar-sign
+  targetNode: bonfireStake
+  category: construction-category-structures
   objectType: Structure
   placementMode: SnapgridCenter
-  canBuildInImpassable: true
+  canRotate: false
+  canBuildInImpassable: false
   conditions:
-    - !type:WallmountCondition
+  - !type:TileNotBlocked

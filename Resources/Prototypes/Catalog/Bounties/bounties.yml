@@ -88,23 +88,6 @@
   group: HunterBounty
 
 - type: cargoBounty
-  id: BountyClownCostume
-  reward: 2000
-  description: bounty-description-clown-costume
-  entries:
-  - name: bounty-item-clown-mask
-    amount: 1
-    whitelist:
-      tags:
-      - ClownMask
-  - name: bounty-item-clown-shoes
-    amount: 1
-    whitelist:
-      tags:
-      - ClownShoes
-  group: ExplorationBounty
-
-- type: cargoBounty
   id: BountyCorn
   reward: 2000
   description: bounty-description-corn
@@ -294,7 +277,7 @@
   description: bounty-description-pancake
   entries:
   - name: bounty-item-pancake
-    amount: 10
+    amount: 6
     whitelist:
       tags:
       - Pancake
@@ -625,16 +608,6 @@
       tags:
       - ChiliBowl
   group: ServiceBounty
-
-- type: cargoBounty
-  id: BountyRollerskates
-  reward: 900
-  description: bounty-description-rollerskates
-  entries:
-  - name: bounty-item-rollerskates
-    whitelist:
-      components:
-      - Skates
 
 - type: cargoBounty
   id: BountyBedsheet

@@ -146,6 +146,49 @@ public abstract class SharedHandLabelerSystem : EntitySystem
             $"{ToPrettyString(user):user} removed label from {ToPrettyString(target):target} with {ToPrettyString(uid):labeler}");
     }
 
+    private void OnUtilityVerb(Entity<HandLabelerComponent> ent, ref GetVerbsEvent<UtilityVerb> args)
+    {
+        if (args.Target is not { Valid: true } target || !_whitelistSystem.CheckBoth(target, ent.Comp.Blacklist, ent.Comp.Whitelist) || !args.CanAccess)
+            return;
+
+        var user = args.User;   // can't use ref parameter in lambdas
+
+        if (ent.Comp.AssignedLabel != string.Empty)
+        {
+            var labelVerb = new UtilityVerb()
+            {
+                Act = () =>
+                {
+                    AddLabelTo(ent, user, target);
+                },
+                Text = Loc.GetString("hand-labeler-add-label-text")
+            };
+
+            args.Verbs.Add(labelVerb);
+        }
+
+        // add the unlabel verb to the menu even when the labeler has text
+        var unLabelVerb = new UtilityVerb()
+        {
+            Act = () =>
+            {
+                RemoveLabelFrom(ent, user, target);
+            },
+            Text = Loc.GetString("hand-labeler-remove-label-text"),
+            Priority = -1,
+        };
+
+        args.Verbs.Add(unLabelVerb);
+    }
+
+    private void AfterInteractOn(Entity<HandLabelerComponent> ent, ref AfterInteractEvent args)
+    {
+        if (args.Target is not { Valid: true } target || !_whitelistSystem.CheckBoth(target, ent.Comp.Blacklist, ent.Comp.Whitelist) || !args.CanReach)
+            return;
+
+        AddLabelTo(ent, args.User, target);
+    }
+
     private void OnHandLabelerLabelChanged(EntityUid uid, HandLabelerComponent handLabeler, HandLabelerLabelChangedMessage args)
     {
         var label = args.Label.Trim();
