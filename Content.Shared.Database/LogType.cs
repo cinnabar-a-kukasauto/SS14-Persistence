@@ -479,6 +479,13 @@ public enum LogType
     /// </summary>
     Instrument = 103,
 
+<<<<<<< HEAD
     ATMUsage = 200,
     BluespaceParking = 201,
+=======
+    /// <summary>
+    /// Events related to players connecting/disconnecting.
+    /// </summary>
+    Connection = 104,
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
 }

@@ -4,12 +4,13 @@
   Nanotrasen employs a variety of sapient species.
 
   <Box>
-  <GuideEntityEmbed Entity="MobArachnid" Caption="Arachnid"/>
-  <GuideEntityEmbed Entity="MobDiona" Caption="Diona"/>
-  <GuideEntityEmbed Entity="MobDwarf" Caption="Dwarf"/>
-  <GuideEntityEmbed Entity="MobHuman" Caption="Human"/>
+  <GuideEntityEmbed Entity="AppearanceArachnid" Caption="Arachnid"/>
+  <GuideEntityEmbed Entity="AppearanceDiona" Caption="Diona"/>
+  <GuideEntityEmbed Entity="AppearanceDwarf" Caption="Dwarf"/>
+  <GuideEntityEmbed Entity="AppearanceHuman" Caption="Human"/>
   </Box>
   <Box>
+<<<<<<< HEAD
   <GuideEntityEmbed Entity="MobMoth" Caption="Moth Person"/>
   <GuideEntityEmbed Entity="MobReptilian" Caption="Unathi"/>
   <GuideEntityEmbed Entity="MobSlimePerson" Caption="Slime Person"/>
@@ -17,6 +18,15 @@
   </Box>
   <Box>
     <GuideEntityEmbed Entity="MobVulpkanin" Caption="Canidae"/>
+=======
+  <GuideEntityEmbed Entity="AppearanceMoth" Caption="Moth Person"/>
+  <GuideEntityEmbed Entity="AppearanceReptilian" Caption="Reptilian"/>
+  <GuideEntityEmbed Entity="AppearanceSlimePerson" Caption="Slime Person"/>
+  <GuideEntityEmbed Entity="AppearanceVox" Caption="Vox"/>
+  </Box>
+  <Box>
+    <GuideEntityEmbed Entity="AppearanceVulpkanin" Caption="Vulpkanin"/>
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
   </Box>
 
 </Document>

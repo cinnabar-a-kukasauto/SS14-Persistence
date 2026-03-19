@@ -9,17 +9,20 @@ namespace Content.Server.NodeContainer.Nodes
     [DataDefinition]
     public sealed partial class PortPipeNode : PipeNode
     {
-        public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
+        public override IEnumerable<Node> GetReachableNodes(
+            Entity<TransformComponent> xform,
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
-            MapGridComponent? grid,
+            Entity<MapGridComponent>? grid,
             IEntityManager entMan)
         {
-            if (!xform.Anchored || grid == null)
+            if (!xform.Comp.Anchored || grid is not { } gridEnt)
                 yield break;
 
-            var gridIndex = grid.TileIndicesFor(xform.Coordinates);
+            var mapSystem = entMan.System<SharedMapSystem>();
+            var gridIndex = mapSystem.TileIndicesFor(gridEnt, xform.Comp.Coordinates);
 
+<<<<<<< HEAD
             if (entMan.TryGetComponent<MCTNComponent>(Owner, out var mctNode) && entMan.TrySystem<MCTNSystem>(out var mctnSys))
             {
                 var remoteNode = mctnSys.GetRemoteConnectionFor(Owner, mctNode, this);
@@ -28,6 +31,9 @@ namespace Content.Server.NodeContainer.Nodes
             }
 
             foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, grid, gridIndex))
+=======
+            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, gridEnt, gridIndex, mapSystem))
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
             {
                 if (node is PortablePipeNode)
                     yield return node;

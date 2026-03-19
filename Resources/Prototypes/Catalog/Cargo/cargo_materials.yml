@@ -40,31 +40,61 @@
 
 - type: cargoProduct
   id: MaterialPlasteel
+  name: cargoproduct-name-material-plasteel
+  description: cargoproduct-description-material-plasteel
   icon:
     sprite: Objects/Materials/Sheets/metal.rsi
     state: plasteel_3
+<<<<<<< HEAD
   product: CrateMaterialPlasteel
   cost: 2000
+=======
+  product: SheetPlasteel
+  container:
+    entity: WrappedParcel
+    containerId: contents
+  cost: 1600
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
   category: cargoproduct-category-name-materials
   group: market
 
 - type: cargoProduct
   id: MaterialGold
+  name: cargoproduct-name-material-gold
+  description: cargoproduct-description-material-gold
   icon:
     sprite: Objects/Materials/ingots.rsi
     state: gold_3
+<<<<<<< HEAD
   product: CrateMaterialGold
   cost: 4000
+=======
+  product: IngotGold
+  container:
+    entity: WrappedParcel
+    containerId: contents
+  cost: 3225
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
   category: cargoproduct-category-name-materials
   group: market
 
 - type: cargoProduct
   id: MaterialSilver
+  name: cargoproduct-name-material-silver
+  description: cargoproduct-description-material-silver
   icon:
     sprite: Objects/Materials/ingots.rsi
     state: silver_3
+<<<<<<< HEAD
   product: CrateMaterialSilver
   cost: 3500
+=======
+  product: IngotSilver
+  container:
+    entity: WrappedParcel
+    containerId: contents
+  cost: 2580
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
   category: cargoproduct-category-name-materials
   group: market
 

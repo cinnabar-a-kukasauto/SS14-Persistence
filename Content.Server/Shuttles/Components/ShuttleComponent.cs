@@ -70,6 +70,7 @@ namespace Content.Server.Shuttles.Components
         [DataField]
         public float DampingModifier;
 
+<<<<<<< HEAD
 
         /// <summary>
         /// Used by ShuttleSystem to set the DampingModifier from a few options
@@ -82,5 +83,13 @@ namespace Content.Server.Shuttles.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
         public bool InFTL = false;
+=======
+        /// <summary>
+        /// Optional override for the FTL cooldown for this shuttle.
+        /// If not null, then the value will be used instead of the shuttle.cooldown CCVar.
+        /// </summary>
+        [DataField]
+        public TimeSpan? FTLCooldownOverride = null;
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
     }
 }

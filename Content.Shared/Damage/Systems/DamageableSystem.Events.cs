@@ -9,7 +9,11 @@ using Content.Shared.Inventory;
 using Content.Shared.Radiation.Events;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.GameStates;
+<<<<<<< HEAD
 using Robust.Shared.Map.Events;
+=======
+using Robust.Shared.Prototypes;
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
 
 namespace Content.Shared.Damage.Systems;
 
@@ -17,12 +21,19 @@ public sealed partial class DamageableSystem
 {
     public override void Initialize()
     {
+        RebuildContainerCache();
+
+        SubscribeLocalEvent<PrototypesReloadedEventArgs>(OnPrototypesReloaded);
         SubscribeLocalEvent<DamageableComponent, ComponentInit>(DamageableInit);
-        SubscribeLocalEvent<DamageableComponent, ComponentHandleState>(DamageableHandleState);
-        SubscribeLocalEvent<DamageableComponent, ComponentGetState>(DamageableGetState);
         SubscribeLocalEvent<DamageableComponent, OnIrradiatedEvent>(OnIrradiated);
         SubscribeLocalEvent<DamageableComponent, RejuvenateEvent>(OnRejuvenate);
+<<<<<<< HEAD
         SubscribeLocalEvent<BeforeSerializationEvent>(OnMapSave);
+=======
+        SubscribeLocalEvent<DamageableComponent, ComponentHandleState>(DamageableHandleState);
+        SubscribeLocalEvent<DamageableComponent, ComponentGetState>(DamageableGetState);
+
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
         _appearanceQuery = GetEntityQuery<AppearanceComponent>();
         _damageableQuery = GetEntityQuery<DamageableComponent>();
 
@@ -136,11 +147,45 @@ public sealed partial class DamageableSystem
 
     }
 
+    private void OnPrototypesReloaded(PrototypesReloadedEventArgs ev)
+    {
+        if (!ev.WasModified<DamageContainerPrototype>() && !ev.WasModified<DamageGroupPrototype>())
+            return;
+
+        RebuildContainerCache();
+    }
+
+    private void RebuildContainerCache()
+    {
+        _supportedTypesByContainer.Clear();
+
+        foreach (var proto in _prototypeManager.EnumeratePrototypes<DamageContainerPrototype>())
+        {
+            var set = new HashSet<ProtoId<DamageTypePrototype>>();
+            _supportedTypesByContainer[proto.ID] = set;
+
+            foreach (var type in proto.SupportedTypes)
+            {
+                set.Add(type);
+            }
+
+            foreach (var groupId in proto.SupportedGroups)
+            {
+                var group = _prototypeManager.Index(groupId);
+                foreach (var type in group.DamageTypes)
+                {
+                    set.Add(type);
+                }
+            }
+        }
+    }
+
     /// <summary>
     ///     Initialize a damageable component
     /// </summary>
     private void DamageableInit(Entity<DamageableComponent> ent, ref ComponentInit _)
     {
+<<<<<<< HEAD
         if(ent.Comp.DamageDictCopy != null)
         {
             ent.Comp.Damage.DamageDict = ent.Comp.DamageDictCopy;
@@ -175,6 +220,8 @@ public sealed partial class DamageableSystem
             }
         }
 
+=======
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
         ent.Comp.Damage.GetDamagePerGroup(_prototypeManager, ent.Comp.DamagePerGroup);
         ent.Comp.TotalDamage = ent.Comp.Damage.GetTotal();
     }
@@ -201,6 +248,16 @@ public sealed partial class DamageableSystem
         _mobThreshold.SetAllowRevives(ent, false);
     }
 
+    private void DamageableGetState(Entity<DamageableComponent> ent, ref ComponentGetState args)
+    {
+        args.State = new DamageableComponentState(
+            _netMan.IsServer ? ent.Comp.Damage : ent.Comp.Damage.Clone(),
+            ent.Comp.DamageContainerID,
+            ent.Comp.DamageModifierSetId,
+            ent.Comp.HealthBarThreshold
+        );
+    }
+
     private void DamageableHandleState(Entity<DamageableComponent> ent, ref ComponentHandleState args)
     {
         if (args.Current is not DamageableComponentState state)
@@ -211,7 +268,7 @@ public sealed partial class DamageableSystem
         ent.Comp.HealthBarThreshold = state.HealthBarThreshold;
 
         // Has the damage actually changed?
-        DamageSpecifier newDamage = new() { DamageDict = new Dictionary<string, FixedPoint2>(state.DamageDict) };
+        var newDamage = state.Damage.Clone();
         var delta = newDamage - ent.Comp.Damage;
         delta.TrimZeros();
 
@@ -240,11 +297,27 @@ public record struct BeforeDamageChangedEvent(DamageSpecifier Damage, EntityUid?
 public sealed class DamageModifyEvent(DamageSpecifier damage, EntityUid? origin = null)
     : EntityEventArgs, IInventoryRelayEvent
 {
-    // Whenever locational damage is a thing, this should just check only that bit of armour.
+    /// <inheritdoc/>
+    /// <remarks>
+    ///     Whenever locational damage is a thing, this should just check only that bit of armor.
+    /// </remarks>
     public SlotFlags TargetSlots => ~SlotFlags.POCKET;
 
+    /// <summary>
+    ///     Contains the original damage, prior to any modifers.
+    /// </summary>
     public readonly DamageSpecifier OriginalDamage = damage;
+
+    /// <summary>
+    ///     Contains the damage after modifiers have been applied.
+    ///     This is the damage that will be inflicted.
+    /// </summary>
     public DamageSpecifier Damage = damage;
+
+    /// <summary>
+    ///     Contains the entity which caused the damage, if any was responsible.
+    /// </summary>
+    public readonly EntityUid? Origin = origin;
 }
 
 public sealed class DamageChangedEvent : EntityEventArgs

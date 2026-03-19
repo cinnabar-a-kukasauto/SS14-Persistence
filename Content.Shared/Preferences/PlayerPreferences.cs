@@ -13,14 +13,20 @@ namespace Content.Shared.Preferences
     [NetSerializable]
     public sealed class PlayerPreferences
     {
-        private Dictionary<int, ICharacterProfile> _characters;
+        private Dictionary<int, HumanoidCharacterProfile> _characters;
 
+<<<<<<< HEAD
         public PlayerPreferences(IEnumerable<KeyValuePair<int, ICharacterProfile>>? characters, int selectedCharacterIndex, Color adminOOCColor, List<ProtoId<ConstructionPrototype>> constructionFavorites)
         {
             if(characters != null)
                 _characters = new Dictionary<int, ICharacterProfile>(characters);
             else
                 _characters = new Dictionary<int, ICharacterProfile>();
+=======
+        public PlayerPreferences(IEnumerable<KeyValuePair<int, HumanoidCharacterProfile>> characters, int selectedCharacterIndex, Color adminOOCColor, List<ProtoId<ConstructionPrototype>> constructionFavorites)
+        {
+            _characters = new Dictionary<int, HumanoidCharacterProfile>(characters);
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
             SelectedCharacterIndex = selectedCharacterIndex;
             AdminOOCColor = adminOOCColor;
             ConstructionFavorites = constructionFavorites;
@@ -29,9 +35,9 @@ namespace Content.Shared.Preferences
         /// <summary>
         ///     All player characters.
         /// </summary>
-        public IReadOnlyDictionary<int, ICharacterProfile> Characters => _characters;
+        public IReadOnlyDictionary<int, HumanoidCharacterProfile> Characters => _characters;
 
-        public ICharacterProfile GetProfile(int index)
+        public HumanoidCharacterProfile GetProfile(int index)
         {
             return _characters[index];
         }
@@ -44,8 +50,13 @@ namespace Content.Shared.Preferences
         /// <summary>
         ///     The currently selected character.
         /// </summary>
+<<<<<<< HEAD
         public ICharacterProfile? SelectedCharacter => Characters.TryGetValue(SelectedCharacterIndex, out var Sel) ? Sel : null;
         
+=======
+        public HumanoidCharacterProfile SelectedCharacter => Characters[SelectedCharacterIndex];
+
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
         public Color AdminOOCColor { get; set; }
 
         /// <summary>
@@ -53,12 +64,12 @@ namespace Content.Shared.Preferences
         /// </summary>
         public List<ProtoId<ConstructionPrototype>> ConstructionFavorites { get; set; } = [];
 
-        public int IndexOfCharacter(ICharacterProfile profile)
+        public int IndexOfCharacter(HumanoidCharacterProfile profile)
         {
             return _characters.FirstOrNull(p => p.Value == profile)?.Key ?? -1;
         }
 
-        public bool TryIndexOfCharacter(ICharacterProfile profile, out int index)
+        public bool TryIndexOfCharacter(HumanoidCharacterProfile profile, out int index)
         {
             return (index = IndexOfCharacter(profile)) != -1;
         }

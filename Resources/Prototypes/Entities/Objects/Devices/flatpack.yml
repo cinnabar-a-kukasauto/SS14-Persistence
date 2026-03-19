@@ -334,6 +334,7 @@
     - Chemicals
 
 - type: entity
+<<<<<<< HEAD
   parent: BaseFlatpack
   id: CargoBountyComputerFlatpack
   name: cargo bounty computer flatpack
@@ -365,3 +366,17 @@
   - type: Sprite
     layers:
     - state: fan
+=======
+  parent: [ BaseFlatpack, BaseSyndicateContraband ]
+  id: SyndicateMicrowaveFlatpack
+  name: donk co. microwave flatpack
+  description: A flatpack used for constructing a microwave too hot for Nanotrasen to handle.
+  components:
+  - type: Item
+    size: Normal
+  - type: Flatpack
+    entity: SyndicateMicrowave
+  - type: GuideHelp
+    guides:
+    - FoodRecipes
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9

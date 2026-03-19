@@ -2,7 +2,11 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+<<<<<<< HEAD
 using Content.Shared.Fluids;
+=======
+using Content.Shared.Power.EntitySystems;
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Containers;
 using Robust.Shared.Network;
@@ -22,7 +26,11 @@ public abstract class SharedSolutionContainerMixerSystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
+<<<<<<< HEAD
     [Dependency] private readonly SharedPuddleSystem _puddle = default!;
+=======
+    [Dependency] private readonly SharedPowerStateSystem _powerState = default!;
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -110,6 +118,7 @@ public abstract class SharedSolutionContainerMixerSystem : EntitySystem
             comp.MixingSoundEntity = _audio.PlayPvs(comp.MixingSound, entity, comp.MixingSound?.Params.WithLoop(true));
         comp.MixTimeEnd = _timing.CurTime + comp.MixDuration * insertedContainers;
         _appearance.SetData(entity, SolutionContainerMixerVisuals.Mixing, true);
+        _powerState.SetWorkingState(entity.Owner, true);
         Dirty(uid, comp);
     }
 
@@ -122,6 +131,7 @@ public abstract class SharedSolutionContainerMixerSystem : EntitySystem
         _appearance.SetData(entity, SolutionContainerMixerVisuals.Mixing, false);
         comp.Mixing = false;
         comp.MixingSoundEntity = null;
+        _powerState.SetWorkingState(entity.Owner, false);
         Dirty(uid, comp);
     }
 

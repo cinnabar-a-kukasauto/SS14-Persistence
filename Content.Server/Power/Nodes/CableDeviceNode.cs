@@ -1,4 +1,3 @@
-using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.NodeContainer;
@@ -33,15 +32,17 @@ namespace Content.Server.Power.Nodes
             return base.Connectable(entMan, xform);
         }
 
-        public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
+        public override IEnumerable<Node> GetReachableNodes(
+            Entity<TransformComponent> xform,
             EntityQuery<NodeContainerComponent> nodeQuery,
             EntityQuery<TransformComponent> xformQuery,
-            MapGridComponent? grid,
+            Entity<MapGridComponent>? grid,
             IEntityManager entMan)
         {
-            if (!xform.Anchored || grid == null)
+            if (!xform.Comp.Anchored || grid is not { } gridEnt)
                 yield break;
 
+<<<<<<< HEAD
             if (entMan.TryGetComponent<MCTNComponent>(Owner, out var mctn) && entMan.TrySystem<MCTNSystem>(out var uepSys))
             {
                 var remoteNode = uepSys.GetRemoteConnectionFor(Owner, mctn, this);
@@ -50,8 +51,12 @@ namespace Content.Server.Power.Nodes
             }
 
             var gridIndex = grid.TileIndicesFor(xform.Coordinates);
+=======
+            var mapSystem = entMan.System<SharedMapSystem>();
+            var gridIndex = mapSystem.TileIndicesFor(gridEnt, xform.Comp.Coordinates);
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
 
-            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, grid, gridIndex))
+            foreach (var node in NodeHelpers.GetNodesInTile(nodeQuery, gridEnt, gridIndex, mapSystem))
             {
                 if (node is CableNode)
                     yield return node;

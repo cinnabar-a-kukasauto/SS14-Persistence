@@ -88,6 +88,7 @@
   group: HunterBounty
 
 - type: cargoBounty
+<<<<<<< HEAD
   id: BountyClownCostume
   reward: 2000
   description: bounty-description-clown-costume
@@ -105,6 +106,8 @@
   group: ExplorationBounty
 
 - type: cargoBounty
+=======
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
   id: BountyCorn
   reward: 2000
   description: bounty-description-corn
@@ -294,7 +297,11 @@
   description: bounty-description-pancake
   entries:
   - name: bounty-item-pancake
+<<<<<<< HEAD
     amount: 10
+=======
+    amount: 6
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
     whitelist:
       tags:
       - Pancake
@@ -625,16 +632,6 @@
       tags:
       - ChiliBowl
   group: ServiceBounty
-
-- type: cargoBounty
-  id: BountyRollerskates
-  reward: 900
-  description: bounty-description-rollerskates
-  entries:
-  - name: bounty-item-rollerskates
-    whitelist:
-      components:
-      - Skates
 
 - type: cargoBounty
   id: BountyBedsheet

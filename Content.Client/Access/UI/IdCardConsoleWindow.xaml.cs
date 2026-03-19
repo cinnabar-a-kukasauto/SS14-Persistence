@@ -24,10 +24,14 @@ namespace Content.Client.Access.UI
 
         private readonly IdCardConsoleBoundUserInterface _owner;
 
+<<<<<<< HEAD
         // CCVar.
         private int _maxNameLength;
         private int _maxIdJobLength;
 
+=======
+        private AccessLevelControl _accessButtons = new();
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
         private readonly List<string> _jobPrototypeIds = new();
 
         private string? _lastFullName;
@@ -46,11 +50,8 @@ namespace Content.Client.Access.UI
 
             _owner = owner;
 
-            _maxNameLength = _cfgManager.GetCVar(CCVars.MaxNameLength);
-            _maxIdJobLength = _cfgManager.GetCVar(CCVars.MaxIdJobLength);
-
             FullNameLineEdit.OnTextEntered += _ => SubmitData();
-            FullNameLineEdit.IsValid = s => s.Length <= _maxNameLength;
+            FullNameLineEdit.IsValid = s => s.Length <= _cfgManager.GetCVar(CCVars.MaxNameLength);
             FullNameLineEdit.OnTextChanged += _ =>
             {
                 FullNameSaveButton.Disabled = FullNameSaveButton.Text == _lastFullName;
@@ -58,6 +59,16 @@ namespace Content.Client.Access.UI
             FullNameSaveButton.OnPressed += _ => SubmitData();
             SpendingReset.OnPressed += _ => ResetSpending();
 
+<<<<<<< HEAD
+=======
+            JobTitleLineEdit.OnTextEntered += _ => SubmitData();
+            JobTitleLineEdit.IsValid = s => s.Length <= _cfgManager.GetCVar(CCVars.MaxIdJobLength);
+            JobTitleLineEdit.OnTextChanged += _ =>
+            {
+                JobTitleSaveButton.Disabled = JobTitleLineEdit.Text == _lastJobTitle;
+            };
+            JobTitleSaveButton.OnPressed += _ => SubmitData();
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
 
         }
 

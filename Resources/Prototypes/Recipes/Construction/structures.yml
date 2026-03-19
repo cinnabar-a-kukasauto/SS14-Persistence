@@ -1491,6 +1491,7 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+<<<<<<< HEAD
 # Persistence14 stuff
 - type: construction
   id: Morgue
@@ -1528,3 +1529,31 @@
   canBuildInImpassable: true
   conditions:
     - !type:WallmountCondition
+=======
+
+- type: construction
+  id: Bonfire
+  graph: Bonfire
+  startNode: start
+  targetNode: bonfire
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  id: BonfireStake
+  graph: Bonfire
+  startNode: start
+  targetNode: bonfireStake
+  category: construction-category-structures
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9

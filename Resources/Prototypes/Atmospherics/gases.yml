@@ -6,7 +6,12 @@
   molarMass: 32
   color: 2887E8
   reagent: Oxygen
+<<<<<<< HEAD
   pricePerMole: 0.35
+=======
+  pricePerMole: 0
+  isOxidizer: true
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
 
 - type: gas
   id: Nitrogen
@@ -38,7 +43,12 @@
   gasOverlayState: plasma
   color: FF3300
   reagent: Plasma
+<<<<<<< HEAD
   pricePerMole: 0.4
+=======
+  pricePerMole: 0
+  isFuel: true
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
 
 - type: gas
   id: Tritium
@@ -50,7 +60,12 @@
   gasOverlayState: tritium
   color: 13FF4B
   reagent: Tritium
+<<<<<<< HEAD
   pricePerMole: .8
+=======
+  pricePerMole: 2.5
+  isFuel: true
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
 
 - type: gas
   id: WaterVapor

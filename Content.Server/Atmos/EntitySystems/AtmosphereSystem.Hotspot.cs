@@ -1,3 +1,4 @@
+using System.Globalization;
 using Content.Server.Atmos.Components;
 using Content.Server.Decals;
 using Content.Shared.Atmos;
@@ -97,8 +98,12 @@ public sealed partial class AtmosphereSystem
         if (tile.Hotspot.Temperature < Atmospherics.FireMinimumTemperatureToExist ||
             tile.Hotspot.Volume <= 1f ||
             tile.Air == null ||
+<<<<<<< HEAD
             (!hasFuel) ||
             (oxygen < 0.5f && clf3 < 0.5f))
+=======
+            !IsMixtureIgnitable(tile.Air))
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
         {
             // Extinguish hotspot and clear any residual fire reaction results on the tile's air
             tile.Hotspot = new Hotspot();
@@ -223,21 +228,28 @@ public sealed partial class AtmosphereSystem
         if (tile.Air == null)
             return;
 
+<<<<<<< HEAD
         var oxygen = tile.Air.GetMoles(Gas.Oxygen);
         var clf3 = tile.Air.GetMoles(Gas.ChlorineTrifluoride);
 
         // ClF3 is hypergolic and ignites without oxygen, but most other gases need oxygen
         if (oxygen < 0.5f && clf3 < 0.5f)
+=======
+        if (!IsMixtureOxidizer(tile.Air))
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
             return;
 
-        var plasma = tile.Air.GetMoles(Gas.Plasma);
-        var tritium = tile.Air.GetMoles(Gas.Tritium);
+        var isFlammable = IsMixtureFuel(tile.Air);
 
         if (tile.Hotspot.Valid)
         {
             if (soh)
             {
+<<<<<<< HEAD
                 if (plasma > 0.5f || tritium > 0.5f || clf3 > 0.5f)
+=======
+                if (isFlammable)
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
                 {
                     tile.Hotspot.Temperature = MathF.Max(tile.Hotspot.Temperature, exposedTemperature);
                     tile.Hotspot.Volume = MathF.Max(tile.Hotspot.Volume, exposedVolume);
@@ -247,17 +259,22 @@ public sealed partial class AtmosphereSystem
             return;
         }
 
+<<<<<<< HEAD
         if (exposedTemperature > Atmospherics.PlasmaMinimumBurnTemperature &&
             (plasma > 0.5f || tritium > 0.5f ||
              tile.Air.GetMoles(Gas.Methane) > 0.5f ||
              tile.Air.GetMoles(Gas.Hydrogen) > 0.5f ||
              clf3 > 0.5f)) // ClF3 ignites at high temperature regardless of oxygen
+=======
+        if (exposedTemperature > Atmospherics.PlasmaMinimumBurnTemperature && isFlammable)
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
         {
             if (sparkSourceUid.HasValue)
             {
                 _adminLog.Add(LogType.Flammable,
                     LogImpact.High,
-                    $"Heat/spark of {ToPrettyString(sparkSourceUid.Value)} caused atmos ignition of gas: {tile.Air.Temperature.ToString():temperature}K - {oxygen}mol Oxygen, {plasma}mol Plasma, {tritium}mol Tritium");
+                    $"Heat/spark of {ToPrettyString(sparkSourceUid.Value)} caused atmos ignition of gas: " +
+                    $"{tile.Air.ToPrettyString()}");
             }
 
             // Determine primary fuel gas if not provided

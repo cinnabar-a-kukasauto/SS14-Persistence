@@ -1,8 +1,11 @@
+<<<<<<< HEAD
 using Content.Server.Administration;
 using Content.Server.Body.Systems;
+=======
+﻿using Content.Server.Administration;
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
 using Content.Server.Cargo.Components;
 using Content.Shared.Administration;
-using Content.Shared.Body.Components;
 using Content.Shared.Cargo;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.Components.SolutionManager;
@@ -19,7 +22,11 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
+<<<<<<< HEAD
 using System.Linq;
+=======
+using Content.Shared.Research.Prototypes;
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
 
 namespace Content.Server.Cargo.Systems;
 
@@ -31,7 +38,6 @@ public sealed class PricingSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
     [Dependency] private readonly IConsoleHost _consoleHost = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly BodySystem _bodySystem = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solutionContainerSystem = default!;
 
@@ -99,18 +105,7 @@ public sealed class PricingSystem : EntitySystem
             return;
         }
 
-        var partPenalty = 0.0;
-        if (TryComp<BodyComponent>(uid, out var body))
-        {
-            var partList = _bodySystem.GetBodyChildren(uid, body).ToList();
-            var totalPartsPresent = partList.Sum(_ => 1);
-            var totalParts = partList.Count;
-
-            var partRatio = totalPartsPresent / (double) totalParts;
-            partPenalty = component.Price * (1 - partRatio) * component.MissingBodyPartPenalty;
-        }
-
-        args.Price += (component.Price - partPenalty) * (_mobStateSystem.IsAlive(uid, state) ? 1.0 : component.DeathPenalty);
+        args.Price += component.Price * (_mobStateSystem.IsAlive(uid, state) ? 1.0 : component.DeathPenalty);
     }
 
     private double GetSolutionPrice(Entity<SolutionContainerManagerComponent> entity)

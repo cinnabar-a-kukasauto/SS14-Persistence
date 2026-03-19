@@ -321,6 +321,7 @@
   - type: Appearance
   - type: StaticPrice
     price: 5000
+<<<<<<< HEAD
 
 #begin persistence 
 - type: entity
@@ -373,3 +374,9 @@
     steps: 1
     zeroVisible: true
   - type: Appearance
+=======
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 8
+>>>>>>> 6a675126ad848468cfce6f538545d77ed5e7fea9
